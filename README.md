@@ -1,5 +1,7 @@
 # OrangeHRM UI Test Automation Framework
 
+[![CI](https://github.com/tamar-bunturi/selenium-ui-automation-framework/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tamar-bunturi/selenium-ui-automation-framework/actions/workflows/ci.yml)
+
 A UI test automation framework for the OrangeHRM demo application, built with Java, Selenium WebDriver, and TestNG using the Page Object Model (POM). Test execution is reported through Allure.
 
 ## Tech Stack
