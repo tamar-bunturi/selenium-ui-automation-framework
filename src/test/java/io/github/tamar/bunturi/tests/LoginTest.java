@@ -6,18 +6,17 @@ import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
     @Test
-    public void validLoginShowsDashboard(){
-        LoginPage loginPage = new LoginPage(driver);
+    public void validLoginShowsDashboard() {
+        LoginPage loginPage = new LoginPage(driver, config.getExplicitWait());
         loginPage.login("Admin", "admin123");
 
-        String currentUrl = driver.getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("dashboard"),
-                "Expected to land on the dashboard after valid login, but URL was: " + currentUrl);
+        Assert.assertTrue(loginPage.isOnDashboard(),
+                "Expected to land on the dashboard after valid login.");
     }
 
     @Test
     public void invalidLoginShowsError(){
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, config.getExplicitWait());
         loginPage.login("Admin", "wrong");
 
         String errorMessage = loginPage.getErrorMessage();

@@ -13,10 +13,10 @@ public class BaseTest {
     private DriverManager driverManager;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         config = new ConfigReader();
         driverManager = new DriverManager();
-        driverManager.startDriver();
+        driverManager.startDriver(config.getBrowser());      // ← uses getBrowser()
         driver = driverManager.getDriver();
         driver.get(config.getBaseUrl());
     }

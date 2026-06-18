@@ -1,5 +1,6 @@
 package io.github.tamar.bunturi.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,36 +19,46 @@ public class LoginPage {
     private final By loginButton = By.cssSelector("button[type='submit']");
     private final By errorAlert = By.cssSelector(".oxd-alert-content-text");
 
-    public LoginPage(WebDriver driver){
+    public LoginPage(WebDriver driver, int waitSeconds) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(waitSeconds));
     }
 
-    public void enterUsername(String username){
+    @Step("Enter username: {username}")
+    public void enterUsername(String username) {
         WebElement field = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(usernameField));
         field.clear();
         field.sendKeys(username);
     }
 
-    public void enterPassword(String password){
+    @Step("Enter password")
+    public void enterPassword(String password) {
         WebElement field = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(passwordField));
         field.clear();
         field.sendKeys(password);
     }
 
-    public void clickLogin(){
+    @Step("Click the login button")
+    public void clickLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }
 
-    public void login (String username, String password){
+    @Step("Log in as {username}")
+    public void login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
         clickLogin();
     }
 
-    public String getErrorMessage(){
+    @Step("Check if login succeeded")
+    public boolean isOnDashboard() {
+        return driver.getCurrentUrl().contains("dashboard");
+    }
+
+    @Step("Read the login error message")
+    public String getErrorMessage() {
         return wait.until(
                 ExpectedConditions.visibilityOfElementLocated(errorAlert)).getText();
     }

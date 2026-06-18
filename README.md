@@ -1,47 +1,55 @@
 # OrangeHRM UI Test Automation Framework
 
-A UI test automation framework for the [OrangeHRM](https://opensource-demo.orangehrmlive.com/) demo application, built with Java, Selenium WebDriver, and TestNG using the Page Object Model. Test execution is reported through Allure.
+A UI test automation framework for the OrangeHRM demo application, built with Java, Selenium WebDriver, and TestNG using the Page Object Model (POM). Test execution is reported through Allure.
 
 ## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| Java 25 | Programming language |
-| Selenium WebDriver 4.44 | Browser automation |
-| TestNG | Test framework & assertions |
-| Maven | Build & dependency management |
-| Allure | Test reporting |
+| Tool                    | Purpose                       |
+| ----------------------- | ----------------------------- |
+| Java 21                 | Programming language          |
+| Selenium WebDriver 4.44 | Browser automation            |
+| TestNG                  | Test framework & assertions   |
+| Maven                   | Build & dependency management |
+| Allure                  | Test reporting                |
 
 ## Design
 
 The framework follows the **Page Object Model (POM)** to separate test logic from page details:
 
-- **`pages/`** — one class per page (e.g. `LoginPage`). Each holds the page's element locators and the actions a user can perform on it. Locators live in one place, so a UI change is a one-line fix.
-- **`drivers/`** — `DriverManager` handles starting and stopping the browser.
-- **`config/`** — `ConfigReader` reads settings (browser, base URL, wait time) from `config.properties`, so no values are hardcoded in tests.
-- **`tests/`** — `BaseTest` opens a fresh browser before each test and closes it after, so tests stay independent. Test classes extend it.
+* **`pages/`** — one class per page (e.g., `LoginPage`). Each page contains its element locators and user actions. Keeping locators in one place makes maintenance easier when the UI changes.
+* **`drivers/`** — `DriverManager` handles browser initialization and cleanup.
+* **`config/`** — `ConfigReader` loads configuration values such as browser type, base URL, and timeout settings from `config.properties`.
+* **`tests/`** — `BaseTest` manages test setup and teardown, ensuring each test runs in a clean browser session.
 
-Synchronisation uses **explicit waits** (`WebDriverWait` + `ExpectedConditions`) — never `Thread.sleep` — so tests wait only as long as needed and fail fast when an element never appears.
+Synchronization is implemented using **explicit waits** (`WebDriverWait` and `ExpectedConditions`) instead of `Thread.sleep()`, improving reliability and execution speed.
 
 ## Test Coverage
 
-| Test | Scenario |
-|------|----------|
-| `validLoginShowsDashboard` | Logs in with valid credentials and verifies the dashboard loads |
-| `invalidLoginShowsError` | Attempts login with a wrong password and verifies the error message |
+| Test                       | Scenario                                                                            |
+| -------------------------- | ----------------------------------------------------------------------------------- |
+| `validLoginShowsDashboard` | Logs in with valid credentials and verifies the dashboard is displayed              |
+| `invalidLoginShowsError`   | Attempts login with invalid credentials and verifies the error message is displayed |
 
-Both a positive and a negative path are covered.
+The framework includes both positive and negative login scenarios.
 
 ## How to Run
 
-Prerequisites: Java 25 and Maven installed, and Google Chrome (the driver is resolved automatically by Selenium Manager).
+### Prerequisites
 
-Run the test suite:
+* Java 21
+* Maven
+* Google Chrome
+
+Selenium Manager automatically resolves the appropriate browser driver.
+
+### Run Tests
+
 ```bash
 mvn test
 ```
 
-Generate and open the Allure report:
+### Generate and Open Allure Report
+
 ```bash
 mvn allure:serve
 ```

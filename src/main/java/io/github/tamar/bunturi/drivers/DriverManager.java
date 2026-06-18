@@ -6,11 +6,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class DriverManager {
     private WebDriver driver;
 
-    public void startDriver (){
-        driver = new ChromeDriver();
+    public void startDriver (String browser){
+        if(browser.equalsIgnoreCase("chrome")){
+            driver = new ChromeDriver();
+        } else{
+            throw new IllegalArgumentException("Unsupported browser: " + browser);
+        }
         driver.manage().window().maximize();
     }
-
     public WebDriver getDriver(){
         return driver;
     }

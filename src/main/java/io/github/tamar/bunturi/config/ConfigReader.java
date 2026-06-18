@@ -29,7 +29,7 @@ public class ConfigReader {
         return properties.getProperty("baseUrl");
     }
 
-    public int getExplicitwait (){
+    public int getExplicitWait (){
         return Integer.parseInt(properties.getProperty("explicitWait"));
 
     }
