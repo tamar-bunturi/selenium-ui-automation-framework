@@ -54,7 +54,12 @@ public class LoginPage {
 
     @Step("Check if login succeeded")
     public boolean isOnDashboard() {
-        return driver.getCurrentUrl().contains("dashboard");
+        try {
+            wait.until(ExpectedConditions.urlContains("dashboard"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Step("Read the login error message")
